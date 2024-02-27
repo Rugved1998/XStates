@@ -14,8 +14,8 @@ export default function App() {
     axios
       .get("https://crio-location-selector.onrender.com/countries")
       .then((response) => {
-        const trimmedCountries = response.data.map((country) => country.trim());
-        setCountries(trimmedCountries);
+        const uniqueCountries = removeDuplicates(response.data);
+        setCountries(uniqueCountries);
       })
       .catch((error) => {
         console.log("Error fetching countries: ", error);
@@ -29,8 +29,8 @@ export default function App() {
           `https://crio-location-selector.onrender.com/country=${selectedCountry}/states`
         )
         .then((response) => {
-          const trimmedStates = response.data.map((state) => state.trim());
-          setStates(trimmedStates);
+          const uniqueStates = removeDuplicates(response.data);
+          setStates(uniqueStates);
           setSelectedState("");
           setCities([]);
           setSelectedCity("");
@@ -48,8 +48,8 @@ export default function App() {
           `https://crio-location-selector.onrender.com/country=${selectedCountry}/state=${selectedState}/cities`
         )
         .then((response) => {
-          const trimmedCities = response.data.map((city) => city.trim());
-          setCities(trimmedCities);
+          const uniqueCities = removeDuplicates(response.data);
+          setCities(uniqueCities);
           setSelectedCity("");
         })
         .catch((error) => {
@@ -57,6 +57,22 @@ export default function App() {
         });
     }
   }, [selectedCountry, selectedState]);
+
+  const removeDuplicates = (data) => {
+    const uniqueSet = new Set();
+    const resultArray = [];
+
+    for (const value of data) {
+      if (uniqueSet.has(value.trim())) {
+        resultArray.push("Duplicate");
+      } else {
+        uniqueSet.add(value.trim());
+        resultArray.push(value.trim());
+      }
+    }
+
+    return resultArray;
+  };
   return (
     <div className="city-selector">
       <h1>Select Location</h1>
