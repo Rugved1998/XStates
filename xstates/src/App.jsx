@@ -14,7 +14,8 @@ export default function App() {
     axios
       .get("https://crio-location-selector.onrender.com/countries")
       .then((response) => {
-        setCountries(response.data);
+        const uniqueCountries = Array.from(new Set(response.data.map((country) => country.trim())));
+        setCountries(uniqueCountries);
       })
       .catch((error) => {
         console.log("Error fetching countries: ", error);
@@ -28,7 +29,8 @@ export default function App() {
           `https://crio-location-selector.onrender.com/country=${selectedCountry}/states`
         )
         .then((response) => {
-          setStates(response.data);
+          const uniqueStates = Array.from(new Set(response.data.map((state) => state.trim())));
+          setStates(uniqueStates);
           setSelectedState("");
           setCities([]);
           setSelectedCity("");
@@ -46,7 +48,8 @@ export default function App() {
           `https://crio-location-selector.onrender.com/country=${selectedCountry}/state=${selectedState}/cities`
         )
         .then((response) => {
-          setCities(response.data);
+          const uniqueCities = Array.from(new Set(response.data.map((city) => city.trim())));
+          setCities(uniqueCities);
           setSelectedCity("");
         })
         .catch((error) => {
