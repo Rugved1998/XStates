@@ -14,8 +14,8 @@ export default function App() {
     axios
       .get("https://crio-location-selector.onrender.com/countries")
       .then((response) => {
-        const uniqueCountries = Array.from(new Set(response.data.map((country) => country.trim())));
-        setCountries(uniqueCountries);
+        const trimmedCountries = response.data.map((country) => country.trim());
+        setCountries(trimmedCountries);
       })
       .catch((error) => {
         console.log("Error fetching countries: ", error);
@@ -29,8 +29,8 @@ export default function App() {
           `https://crio-location-selector.onrender.com/country=${selectedCountry}/states`
         )
         .then((response) => {
-          const uniqueStates = Array.from(new Set(response.data.map((state) => state.trim())));
-          setStates(uniqueStates);
+          const trimmedStates = response.data.map((state) => state.trim());
+          setStates(trimmedStates);
           setSelectedState("");
           setCities([]);
           setSelectedCity("");
@@ -48,8 +48,8 @@ export default function App() {
           `https://crio-location-selector.onrender.com/country=${selectedCountry}/state=${selectedState}/cities`
         )
         .then((response) => {
-          const uniqueCities = Array.from(new Set(response.data.map((city) => city.trim())));
-          setCities(uniqueCities);
+          const trimmedCities = response.data.map((city) => city.trim());
+          setCities(trimmedCities);
           setSelectedCity("");
         })
         .catch((error) => {
@@ -106,7 +106,7 @@ export default function App() {
           You Selected <span className="highlight">{selectedCity},</span>
           <span className="fade">
             {" "}
-            {selectedState},{selectedCountry}
+            {selectedState},{" "}{selectedCountry}
           </span>
         </h2>
       )}
