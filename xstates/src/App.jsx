@@ -14,8 +14,7 @@ export default function App() {
     axios
       .get("https://crio-location-selector.onrender.com/countries")
       .then((response) => {
-        const uniqueCountries = removeDuplicates(response.data);
-        setCountries(uniqueCountries);
+        setCountries(response.data);
       })
       .catch((error) => {
         console.log("Error fetching countries: ", error);
@@ -29,8 +28,7 @@ export default function App() {
           `https://crio-location-selector.onrender.com/country=${selectedCountry}/states`
         )
         .then((response) => {
-          const uniqueStates = removeDuplicates(response.data);
-          setStates(uniqueStates);
+          setStates(response.data);
           setSelectedState("");
           setCities([]);
           setSelectedCity("");
@@ -48,8 +46,7 @@ export default function App() {
           `https://crio-location-selector.onrender.com/country=${selectedCountry}/state=${selectedState}/cities`
         )
         .then((response) => {
-          const uniqueCities = removeDuplicates(response.data);
-          setCities(uniqueCities);
+          setCities(response.data);
           setSelectedCity("");
         })
         .catch((error) => {
@@ -57,22 +54,6 @@ export default function App() {
         });
     }
   }, [selectedCountry, selectedState]);
-
-  const removeDuplicates = (data) => {
-    const uniqueSet = new Set();
-    const resultArray = [];
-
-    for (const value of data) {
-      if (uniqueSet.has(value.trim())) {
-        resultArray.push("Duplicate");
-      } else {
-        uniqueSet.add(value.trim());
-        resultArray.push(value.trim());
-      }
-    }
-
-    return resultArray;
-  };
   return (
     <div className="city-selector">
       <h1>Select Location</h1>
@@ -117,27 +98,15 @@ export default function App() {
       {/* <h1>Hello CodeSandbox</h1>
       <h2>Start editing to see some magic happen!</h2> */}
 
-      {/* {selectedCity && (
+      {selectedCity && (
         <h2 className="result">
-          You Selected <span className="highlight">{selectedCity},</span>
-          <span className="fade">
-            {" "}
-            {selectedState},{" "}{selectedCountry}
-          </span>
-        </h2>
-      )} */}
-
-      
-        {selectedCity && (
-          <h2 className="result">
-            You Selected {selectedCity},
-            
-              {" "}
-              {selectedState},{" "}{selectedCountry}
-            
-          </h2>
-        )}
-      
+        You Selected {selectedCity},
+        
+          {" "}
+          {selectedState},{" "}{selectedCountry}
+        
+      </h2>
+      )}
     </div>
   );
 }
