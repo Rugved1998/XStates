@@ -114,15 +114,7 @@ export default function App() {
           ))}
         </select>
 
-        {selectedCity && (
-          <h2 className="result">
-            You Selected {selectedCity},
-            
-              {" "}
-              {selectedState},{" "}{selectedCountry}
-            
-          </h2>
-        )}
+        
       </div>
       {/* <h1>Hello CodeSandbox</h1>
       <h2>Start editing to see some magic happen!</h2> */}
@@ -137,7 +129,15 @@ export default function App() {
         </h2>
       )} */}
 
-      
+{selectedCity && (
+          <h2 className="result">
+            You selected {selectedCity},
+            
+              {" "}
+              {selectedState},{" "}{selectedCountry}
+            
+          </h2>
+        )}
        
       
     </div>
