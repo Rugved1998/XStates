@@ -18,7 +18,7 @@ export default function App() {
         setCountries(uniqueCountries);
       })
       .catch((error) => {
-        console.log("Error fetching countries: ", error);
+        console.error("Error fetching countries: ", error);
       });
   }, []);
 
@@ -36,7 +36,7 @@ export default function App() {
           setSelectedCity("");
         })
         .catch((error) => {
-          console.log("Error fetching states: ", error);
+          console.error("Error fetching states: ", error);
         });
     }
   }, [selectedCountry]);
@@ -53,7 +53,7 @@ export default function App() {
           setSelectedCity("");
         })
         .catch((error) => {
-          console.log("Error fetching cities: ", error);
+          console.error("Error fetching cities: ", error);
         });
     }
   }, [selectedCountry, selectedState]);
@@ -113,6 +113,16 @@ export default function App() {
             <option key={city}>{city}</option>
           ))}
         </select>
+
+        {selectedCity && (
+          <h2 className="result">
+            You Selected {selectedCity},
+            
+              {" "}
+              {selectedState},{" "}{selectedCountry}
+            
+          </h2>
+        )}
       </div>
       {/* <h1>Hello CodeSandbox</h1>
       <h2>Start editing to see some magic happen!</h2> */}
@@ -128,15 +138,7 @@ export default function App() {
       )} */}
 
       
-        {selectedCity && (
-          <h2 className="result">
-            You Selected {selectedCity},
-            
-              {" "}
-              {selectedState},{" "}{selectedCountry}
-            
-          </h2>
-        )}
+       
       
     </div>
   );
